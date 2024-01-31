@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import Create from './Create';
 import axios from 'axios';
+import styles from '../Styles/HomePage.module.css';
 
 const HomePage = () => {
   const [allResults, setAllResults] = useState([]); // Estado para almacenar todos los resultados
@@ -100,26 +102,26 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <h1>Página Principal</h1>
-      <div>
-        <div>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Página Principal</h1>
+      <div className={styles.content}>
+        <div className={styles.buttons}>
           <button onClick={() => changeSortBy('name')}>Ordenar por Nombre (A-Z)</button>
           <button onClick={() => changeSortBy('-name')}>Ordenar por Nombre (Z-A)</button>
           <button onClick={() => changeSortBy('rating')}>Ordenar por Rating (Menos a Más)</button>
           <button onClick={() => changeSortBy('-rating')}>Ordenar por Rating (Más a Menos)</button>
         </div>
         <SearchBar onSearch={handleSearch} />
-        {error && <p>Error: {error}</p>}
-        <h2>Resultados de la búsqueda:</h2>
+        {error && <p className={styles.error}>Error: {error}</p>}
+        <h2 className={styles.resultsHeading}>Resultados de la búsqueda:</h2>
         {loading ? (
           <p>Cargando...</p>
         ) : (
           <>
-            <div className="game-cards">
+            <div className={styles.gameCards}>
               {searchResults.map((game) => (
-                <Link key={game.id} to={`/details/${game.id}`} className="game-card-link">
-                  <div className="game-card">
+                <Link key={game.id} to={`/details/${game.id}`} className={styles.gameCardLink}>
+                  <div className={styles.gameCard}>
                     <img src={game.background_image} alt={game.name} />
                     <h3>{game.name}</h3>
                     <p>Géneros: {game.genres.map(genre => genre.name).join(', ')}</p>
@@ -128,10 +130,10 @@ const HomePage = () => {
               ))}
             </div>
             {allResults.length > 0 && currentPage < 6 && (
-              <button onClick={handleLoadMore}>Cargar más</button>
+              <button className={styles.loadMoreButton} onClick={handleLoadMore}>Cargar más</button>
             )}
             {/* Mostrar botones de paginación */}
-            <div>
+            <div className={styles.pagination}>
               <button disabled={currentPage === 1} onClick={handleGoBack}>Página Anterior</button>
               {[...Array(Math.min(6, Math.ceil(allResults.length / resultsPerPage))).keys()].map(pageNumber => (
                 <button key={pageNumber + 1} onClick={() => handlePageChange(pageNumber + 1)}>

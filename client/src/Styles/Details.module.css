@@ -1,0 +1,36 @@
+/* Styles/Details.module.css */
+
+/* Estilos para el contenedor principal */
+.detailsContainer {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente */
+    padding: 20px; /* Espaciado interno */
+    border: 2px solid #ddd; /* Borde */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    background-color:rgba(255, 255, 255, 0.9); /* Color de fondo */
+  }
+  
+  /* Estilos para el título del videojuego */
+  .gameTitle {
+    font-size: 28px; /* Tamaño de la fuente */
+    margin-bottom: 15px; /* Espacio debajo del título */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+  /* Estilos para la imagen del videojuego */
+  .gameImage {
+    width: 100%; /* Ancho del 100% del contenedor */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+    border-radius: 10px; /* Bordes redondeados */
+  }
+  
+  /* Estilos para los párrafos de información */
+  .gameInfo {
+    margin-bottom: 15px; /* Espacio debajo de cada párrafo */
+    font-size: 16px; /* Tamaño de la fuente */
+    line-height: 1.5; /* Altura de línea */
+    color: #333; /* Color del texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  

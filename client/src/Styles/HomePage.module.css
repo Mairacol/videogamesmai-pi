@@ -1,0 +1,146 @@
+/* Styles/HomePage.module.css */
+
+.container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  @font-face {
+    font-family: "Honk-Regular";
+    src: url("Honk-Regular.ttf") format("truetype");
+  }
+  .heading {
+    font-family: "Honk-Regular", sans-serif;
+    font-size: 62px;
+    color: #f9f0f0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .content {
+    margin-top: 20px;
+  }
+  
+  .buttons {
+    margin-bottom: 20px;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .resultsHeading {
+    font-family: "Honk-Regular", sans-serif;
+    font-size: 44px;
+    margin-bottom: 10px;
+    color:  #f9f0f0;
+  }
+  
+  .gameCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .gameCardLink {
+    text-decoration: none;
+    color: #f6eeee;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .gameCard {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .gameCard img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  
+  .loadMoreButton {
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(90deg, #ffd700, #ff69b4);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loadMoreButton:hover {
+    background-image: linear-gradient(90deg, #ffcc00, #e85a99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pagination {
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(90deg, #ffd700, #ff69b4);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:hover {
+    background-image: linear-gradient(90deg, #ffcc00, #e85a99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .pagination button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .buttons {
+    margin-bottom: 20px;
+  }
+  
+  .buttons button {
+    margin-right: 10px; /* Espacio entre los botones */
+    padding: 8px 16px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(90deg, #ffd700, #ff69b4);/* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+  
+  .buttons button:hover {
+    background-image: linear-gradient(90deg, #ffcc00, #e85a99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .searchForm {
+    margin-bottom: 20px; /* Espacio debajo del formulario */
+  }
+  
+  .searchInput {
+    padding: 8px 12px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  
+  .searchButton {
+    padding: 8px 16px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(90deg, #ffd700, #ff69b4); /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+  }
+  
+  .searchButton:hover {
+    background-image: linear-gradient(90deg, #ffcc00, #e85a99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -1,37 +1,71 @@
-/* src/components/LandingPage.module.css */
-.landing-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+/* Styles/LandingPage.module.css */
 
-.background-image {
-    /* Agrega estilos para la imagen de fondo */
-    background-image: url('ruta/a/tu/imagen.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
+.container {
+    text-align: center;
+   
+    max-width: 1200px; /* Establece el ancho máximo del contenedor */
+  margin: 0 auto;
+  }
+  @font-face {
+    font-family: "Honk-Regular";
+    src: url("Honk-Regular.ttf") format("truetype");
+  }
+  @keyframes moveHeading {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(5px); /* Mueve el texto hacia la derecha */
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .heading {
+    font-family: "Honk-Regular", sans-serif;
+    font-size: 150px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 
+               -2px -2px 4px rgba(255, 255, 255, 0.5), 
+               0 0 10px rgba(255, 255, 255, 0.8); /* Agrega una sombra adicional para resaltar */
+  animation: moveHeading 3s ease infinite, changeColor 5s ease infinite; /* Aplica las animaciones de movimiento y cambio de color de forma continua */
+  filter: blur(1px); /* Aplica un ligero desenfoque para simular el efecto pixelado */
+  transform: perspective(100px) rotateY(15deg);
+  }
+  .heading::before {
+    content: ""; /* Agrega contenido al pseudo-elemento */
+    position: absolute; /* Establece una posición absoluta para que el pseudo-elemento se superponga al fondo */
     top: 0;
     left: 0;
-    opacity: 0.7; /* Ajusta la opacidad según sea necesario */
-}
-
-.link-button {
-    /* Estilos para el botón */
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(14, 13, 13, 0.5); */ /* Agrega un color de fondo opaco */
+    z-index: -1; /* Coloca el pseudo-elemento detrás del texto */
+  }
+  .subheading {
+    font-family: "Honk-Regular", sans-serif;
+    font-size: 55px;
+    color: #f6f6f6;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .link {
     text-decoration: none;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.link-button:hover {
-    background-color: #0056b3;
-}
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(90deg, #ffd700, #ff69b4); /* Degradado de amarillo a rosa */
+  }
+  
+  .button:hover {
+    background-image: linear-gradient(90deg, #ffcc00, #e85a99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  

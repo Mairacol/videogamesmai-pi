@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import styles from '../Styles/Details.module.css';
 
 const Details = () => {
   // Obtenemos el id del videojuego de los parámetros de la ruta
@@ -43,15 +44,15 @@ const Details = () => {
   }
 
   return (
-    <div>
+    <div className={styles.detailsContainer}>
       {/* Mostramos la información del videojuego */}
-      <h2>{gameDetails.name}</h2>
-      <img src={gameDetails.background_image} alt={gameDetails.name} />
-      <p>Plataformas: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
-      <p>Descripción: {gameDetails.description_raw}</p>
-      <p>Fecha de lanzamiento: {gameDetails.released}</p>
-      <p>Rating: {gameDetails.rating}</p>
-      <p>Géneros: {gameDetails.genres.map(genre => genre.name).join(', ')}</p>
+      <h2 className={styles.gameTitle}>{gameDetails.name}</h2>
+      <img className={styles.gameImage} src={gameDetails.background_image} alt={gameDetails.name} />
+      <p className={styles.gameInfo}>Plataformas: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
+      <p className={styles.gameInfo}>Descripción: {gameDetails.description_raw}</p>
+      <p className={styles.gameInfo}>Fecha de lanzamiento: {gameDetails.released}</p>
+      <p className={styles.gameInfo}>Rating: {gameDetails.rating}</p>
+      <p className={styles.gameInfo}>Géneros: {gameDetails.genres.map(genre => genre.name).join(', ')}</p>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../Styles/HomePage.module.css';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,14 +15,15 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.searchForm} onSubmit={handleSubmit}>
       <input
+      className={styles.searchInput}
         type="text"
         placeholder="Buscar videojuego..."
         value={searchTerm}
         onChange={handleChange}
       />
-      <button type="submit">Buscar</button>
+      <button className={styles.searchButton}  type="submit">Buscar</button>
     </form>
   );
 };

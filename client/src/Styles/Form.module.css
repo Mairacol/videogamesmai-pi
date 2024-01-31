@@ -1,0 +1,79 @@
+/* Form.module.css */
+
+.formContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  
+}
+.formGroup input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(244, 244, 244, 0.8);
+}
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(244, 244, 244, 0.8); ;
+}
+
+.formGroup select {
+  height: 120px;
+}
+
+.formGroup button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmationMessage {
+  font-family: "Honk-Regular", sans-serif;
+  margin-top: 10px;
+  font-size: 36px;
+}
+@font-face {
+  font-family: "Honk-Regular";
+  src: url("Honk-Regular.ttf") format("truetype");
+}
+.heading {
+  font-family: "Honk-Regular", sans-serif;
+  color: rgb(231, 231, 231);
+  font-weight: bold;
+  font-size: 36px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.submitButton {
+  padding: 12px 24px; /* Aumentar el padding para que el botón sea más grande y cómodo de hacer clic */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(90deg, #ffd700, #ff69b4);   color: white; /* Cambiar el color del texto a blanco */
+  border: none; /* Quitar el borde del botón */
+  border-radius: 5px; /* Agregar bordes redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Agregar una transición suave al color de fondo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton:hover {
+  background-image: linear-gradient(90deg, #ffcc00, #e85a99);  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

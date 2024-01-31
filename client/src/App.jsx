@@ -6,6 +6,7 @@ import LandingPage from './views/LandingPage';
 import HomePage from './views/HomePage';
 import Create from './views/Create';
 import Details from './views/Details';
+import Styles from './Styles/App.module.css'
 
 const App = () => {
     return (
