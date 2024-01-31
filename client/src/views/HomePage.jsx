@@ -1,111 +1,150 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import axios from 'axios';
 
 const HomePage = () => {
+  const [allResults, setAllResults] = useState([]); // Estado para almacenar todos los resultados
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [genreFilter, setGenreFilter] = useState(''); // Estado para el filtro de género
-  const [sourceFilter, setSourceFilter] = useState(''); // Estado para el filtro de origen
-  const [sortBy, setSortBy] = useState(''); // Estado para la opción de ordenación
+  const [sortBy, setSortBy] = useState('name'); // Tipo de ordenamiento (nombre por defecto)
+  const [sortOrder, setSortOrder] = useState('asc'); // Sentido del orden (ascendente por defecto)
+  const resultsPerPage = 15; // Número de resultados por página
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
 
   useEffect(() => {
-    setCurrentPage(1); // Reseteamos la página actual cuando se cambia el término de búsqueda
-  }, []);
+    setCurrentPage(1); // Reiniciar a la primera página cuando cambien los filtros
+    fetchGames();
+  }, [sortBy, sortOrder]); // Eliminamos selectedGenre y selectedOrigin de las dependencias
 
-  const handleSearch = async (searchTerm) => {
+  const fetchGames = async (page = currentPage) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://api.rawg.io/api/games?search=${searchTerm}&page=${currentPage}`);
-      if (!response.ok) {
-        throw new Error('Error al cargar los datos');
-      }
-      const data = await response.json();
-      let filteredResults = data.results || [];
+      const RAWG_API_KEY = '21cb772966be4374ab847401bfb8466d';
+      const response = await axios.get('https://api.rawg.io/api/games', {
+        params: {
+          key: RAWG_API_KEY,
+          dates: '2019-09-01,2019-09-30',
+          platforms: '18,1,7',
+          ordering: `${sortOrder === 'asc' ? '' : '-'}${sortBy}`, // Aplicar el tipo y sentido de ordenamiento
+          page: page,
+          page_size: resultsPerPage // Asegurar que cada solicitud obtenga solo 15 juegos
+        }
+      });
 
-      // Aplicar filtros
-      if (genreFilter) {
-        filteredResults = filteredResults.filter(game => game.genres.some(genre => genre.name === genreFilter));
+      const newResults = response.data.results || [];
+      if (page === 1) {
+        setAllResults(newResults);
+        setSearchResults(newResults.slice(0, resultsPerPage)); // Mostrar solo los primeros 15 juegos en la primera página
+      } else {
+        setAllResults(prevResults => [...prevResults, ...newResults]);
+        setSearchResults(prevResults => [...prevResults, ...newResults.slice(0, resultsPerPage)]); // Agregar los siguientes 15 juegos
       }
-      if (sourceFilter) {
-        filteredResults = filteredResults.filter(game => game.metacritic !== null); // Suponiendo que el origen de la API tiene una clasificación de Metacritic
-      }
-
-      // Aplicar ordenación
-      if (sortBy === 'name') {
-        filteredResults.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (sortBy === 'rating') {
-        filteredResults.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
-      }
-
-      setSearchResults(filteredResults);
       setError(null);
+      setCurrentPage(page); // Actualizar la página actual
     } catch (error) {
       console.error('Error fetching data:', error);
-      setSearchResults([]);
       setError('Error al cargar los datos. Por favor, inténtelo de nuevo.');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleSearch = async (searchTerm) => {
+    setLoading(true);
+    try {
+      const RAWG_API_KEY = '21cb772966be4374ab847401bfb8466d';
+      const response = await axios.get('https://api.rawg.io/api/games', {
+        params: {
+          key: RAWG_API_KEY,
+          search: searchTerm,
+          page: 1, // Resetear a la primera página al realizar una nueva búsqueda
+          page_size: resultsPerPage // Cantidad de resultados por página
+        }
+      });
+
+      const newResults = response.data.results || [];
+      setAllResults(newResults);
+      setSearchResults(newResults.slice(0, resultsPerPage)); // Mostrar solo los primeros 15 juegos
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setError('Error al cargar los datos. Por favor, inténtelo de nuevo.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changeSortBy = (sortByValue) => {
+    setSortBy(sortByValue);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    const startIndex = (pageNumber - 1) * resultsPerPage;
+    const endIndex = startIndex + resultsPerPage;
+    setSearchResults(allResults.slice(startIndex, endIndex));
+  };
+
   const handleLoadMore = () => {
-    setCurrentPage(prevPage => prevPage + 1);
+    const nextPage = currentPage + 1;
+    fetchGames(nextPage); // Llamar a fetchGames con la página siguiente
+  };
+
+  const handleGoBack = () => {
+    if (currentPage > 1) {
+      const previousPage = currentPage - 1;
+      handlePageChange(previousPage);
+    }
   };
 
   return (
     <div>
       <h1>Página Principal</h1>
-      <SearchBar onSearch={handleSearch} />
-      {error && <p>Error: {error}</p>}
-      <h2>Resultados de la búsqueda:</h2>
       <div>
-        {/* Opciones de filtrado */}
-        <label>
-          Filtrar por género:
-          <select value={genreFilter} onChange={(e) => setGenreFilter(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="Action">Acción</option>
-            <option value="Adventure">Aventura</option>
-            {/* Agregar más opciones de género según sea necesario */}
-          </select>
-        </label>
-        <label>
-          Filtrar por origen:
-          <select value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="api">API</option>
-            {/* Agregar más opciones de origen según sea necesario */}
-          </select>
-        </label>
-        {/* Opciones de ordenación */}
-        <button onClick={() => setSortBy('name')}>Ordenar por nombre</button>
-        <button onClick={() => setSortBy('rating')}>Ordenar por rating</button>
+        <div>
+          <button onClick={() => changeSortBy('name')}>Ordenar por Nombre (A-Z)</button>
+          <button onClick={() => changeSortBy('-name')}>Ordenar por Nombre (Z-A)</button>
+          <button onClick={() => changeSortBy('rating')}>Ordenar por Rating (Menos a Más)</button>
+          <button onClick={() => changeSortBy('-rating')}>Ordenar por Rating (Más a Menos)</button>
+        </div>
+        <SearchBar onSearch={handleSearch} />
+        {error && <p>Error: {error}</p>}
+        <h2>Resultados de la búsqueda:</h2>
+        {loading ? (
+          <p>Cargando...</p>
+        ) : (
+          <>
+            <div className="game-cards">
+              {searchResults.map((game) => (
+                <Link key={game.id} to={`/details/${game.id}`} className="game-card-link">
+                  <div className="game-card">
+                    <img src={game.background_image} alt={game.name} />
+                    <h3>{game.name}</h3>
+                    <p>Géneros: {game.genres.map(genre => genre.name).join(', ')}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {allResults.length > 0 && currentPage < 6 && (
+              <button onClick={handleLoadMore}>Cargar más</button>
+            )}
+            {/* Mostrar botones de paginación */}
+            <div>
+              <button disabled={currentPage === 1} onClick={handleGoBack}>Página Anterior</button>
+              {[...Array(Math.min(6, Math.ceil(allResults.length / resultsPerPage))).keys()].map(pageNumber => (
+                <button key={pageNumber + 1} onClick={() => handlePageChange(pageNumber + 1)}>
+                  {pageNumber + 1}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
-      {loading ? (
-        <p>Cargando...</p>
-      ) : (
-        <>
-          <div className="game-cards">
-            {searchResults.map((game) => (
-              <Link key={game.id} to={`/game/${game.id}`} className="game-card-link">
-                <div className="game-card">
-                  <img src={game.background_image} alt={game.name} />
-                  <h3>{game.name}</h3>
-                  <p>Géneros: {game.genres.map(genre => genre.name).join(', ')}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-          {searchResults.length > 0 && (
-            <button onClick={handleLoadMore}>Cargar más</button>
-          )}
-        </>
-      )}
     </div>
   );
 };
 
 export default HomePage;
+
